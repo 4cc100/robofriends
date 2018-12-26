@@ -8,6 +8,7 @@ class App extends Component {
   constructor() {
     super();
 
+    this.dataURL = "https://jsonplaceholder.typicode.com/users";
     this.state = {
       robotok: [],
       searchfield: ''
@@ -15,9 +16,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch("https://jsonplaceholder.typicode.com/users")
+    fetch(this.dataURL)
       .then((response) => response.json())
-      .then((users) => this.setState({ robotok: users}));
+      .then((users) => this.setState({ robotok: users}))
+      .catch((error) => {
+        console.warn(`The following error occured: ${error}`);
+        alert("Oops! Something went wrong. Try again in a few minutes ;)");
+      });
   }
 
   onSearchChange = (event) => {
