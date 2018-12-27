@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import CardList from './CardList';
 import SearchBox from './SearchBox.jsx';
-import './App.css'
+import Scroll from './Scroll';
+import './App.css';
 
 
 class App extends Component {
@@ -18,15 +19,15 @@ class App extends Component {
   componentDidMount() {
     fetch(this.dataURL)
       .then((response) => response.json())
-      .then((users) => this.setState({ robotok: users}))
+      .then((users) => this.setState({ robotok: users }))
       .catch((error) => {
-        console.warn(`The following error occured: ${error}`);
+        console.error(`The following error occured: ${error}`);
         alert("Oops! Something went wrong. Try again in a few minutes ;)");
       });
   }
 
   onSearchChange = (event) => {
-    this.setState({ searchfield: event.target.value});
+    this.setState({ searchfield: event.target.value });
   }
   
   render() {
@@ -40,7 +41,9 @@ class App extends Component {
         <div className="tc">
           <h1>RoboFriends</h1>
           <SearchBox searchChange={this.onSearchChange}/>
-          <CardList robots={filteredRobots}/>
+          <Scroll>
+            <CardList robots={filteredRobots}/>
+          </Scroll>
         </div>
       );
     }
